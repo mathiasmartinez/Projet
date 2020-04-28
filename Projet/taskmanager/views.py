@@ -40,7 +40,8 @@ def Listeprojects(request, ident):
 
 def projet(request, ident):
     ''' Vue qui affiche les tâches d'un projet'''
-    tasks = Task.objects.filter(id=ident) #On récupère les tâches de l'utilisateur concerné
+    projet = Project.objects.get(id=ident)
+    tasks = Task.objects.filter(project_id=ident) #On récupère les tâches de l'utilisateur concerné
     return render(request, 'taskmanager/project.html', locals())
 
 

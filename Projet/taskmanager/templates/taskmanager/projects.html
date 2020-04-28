@@ -2,7 +2,9 @@
 
     <tr>
         {% for p in projects %}
-        <td> {{p}} </td>
+        <td> <a href="{% url 'detail_project' ident=p.id %}"> {{p.name}}</a> </td>
         {% endfor %}
     </tr>
+
+
 </table>

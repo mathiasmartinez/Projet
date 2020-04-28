@@ -1,51 +1,92 @@
+<html>
+<head>
+    <style>
+table {
+    border : 1px solid black ;
+    border-collapse:collapse ;
+    width:50%;
+    height:50%;
+    text-align:center;
+    font-size:200%;
+}
+td {
+    border : 1px solid black ;
+    border-collapse:collapse;
+}
+        tr {
+            border : 1px solid black ;
+            border-collapse : collapse ;
+        }
+    </style>
+</head>
+
+<h2> {{projet.name}} </h2>
 <table>
     <tr>
         <td>
-        Assignee
+           <i>Name</i>
         </td>
         <td>
-            Project
-        </td>
-        <td>
-            Task
-        </td>
-        <td>
-            Start date
-        </td>
-        <td>
-            Due date
-        </td>
-        <td>
-            Priority
-        </td>
-        <td>
-            Status
+            <strong> {{task.name}} </strong>
         </td>
     </tr>
+    <tr>
         <td>
-            {{task.assignee}}
+            <i>Projet</i>
         </td>
         <td>
             {{task.project}}
         </td>
+    </tr>
+    <tr>
+        <td>
+            <i>Description</i>
+        </td>
         <td>
             {{task.description}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>Assignee</i>
+        </td>
+        <td>
+            {{task.assignee}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>Start date</i>
         </td>
         <td>
             {{task.start_date}}
         </td>
+    </tr>
+    <tr>
+        <td>
+            <i>Due date</i>
+        </td>
         <td>
             {{task.due_date}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <i>Priority</i>
         </td>
         <td>
             {{task.priority}}
         </td>
+    </tr>
+    <tr>
+        <td>
+            <i>Status</i>
+        </td>
         <td>
             {{task.status}}
         </td>
-    <tr>
-
     </tr>
+
 </table>
 
 <form  enctype="multipart/form-data" method="post" action= "." >
@@ -63,5 +104,6 @@
 {% endfor %}
 {%endif %}
 
-
+<a href="{% url 'edittask' ide=task.id %}"> Modifier la tâche </a>
+</html>
 
