@@ -47,3 +47,10 @@
 
     </tr>
 </table>
+
+{% for j in journal %}
+    <p>
+        {{j.author}} :
+        {{j.entry}} at {{j.date}}.
+    </p>
+{% endfor %}

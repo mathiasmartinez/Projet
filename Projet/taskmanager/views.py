@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Project, Task, Status
+from .models import Project, Task, Status, Journal
 from .forms import ConnexionForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -44,4 +44,5 @@ def projet(request, ident):
 
 def tache(request,ide):
     task = Task.objects.get(id=ide)
+    journal = Journal.objects.filter(id=ide)
     return render(request, 'taskmanager/tache.html', locals())
