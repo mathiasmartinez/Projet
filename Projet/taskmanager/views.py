@@ -18,8 +18,8 @@ def connexion(request):
             user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # nous connectons l'utilisateur
-                adress = username + '/'
-                return redirect(adress)
+
+                return redirect('projets', ident = user.id)
             else:  # sinon une erreur sera affichée
                 error = True
         else:
@@ -32,6 +32,6 @@ def deconnexion(request):
     logout(request)
     return redirect(reverse(connexion))
 
-def project(request, nom):
-    projects = Project.objects.filter(Project.members.username=nom)
-    return render(request,'taskmanager/projects.hmtl',locals())
+def project(request, ident):
+    projects = Project.objects.filter(id = ident)
+    return render(request,'taskmanager/projects.html',locals())
