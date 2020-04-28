@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Project, Task, Status, Journal
-from .forms import ConnexionForm
+from .forms import ConnexionForm,JournalForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 
@@ -43,6 +43,12 @@ def projet(request, ident):
 
 
 def tache(request,ide):
+
+    show = False
     task = Task.objects.get(id=ide)
     journal = Journal.objects.filter(id=ide)
+    form = JournalForm(request.POST or None)
+    if form.is_valid():
+        show = form.cleaned_data['show']
+
     return render(request, 'taskmanager/tache.html', locals())

@@ -48,9 +48,20 @@
     </tr>
 </table>
 
+<form  enctype="multipart/form-data" method="post" action= "." >
+       {% csrf_token %}
+        {{form.as_p}}
+       <input type="submit" value="Submit" />
+    </form>
+
+{% if show %}
 {% for j in journal %}
     <p>
         {{j.author}} :
         {{j.entry}} at {{j.date}}.
     </p>
 {% endfor %}
+{%endif %}
+
+
+
