@@ -9,6 +9,7 @@ urlpatterns = [
     path('project/<int:ident>/', views.projet),
     path('task/<int:ide>/',views.tache,name='task'),
     path('newtask/',views.newtask),
+    path('edittask/<int:ide>/',views.edittask),
 
 ]
 
