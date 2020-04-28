@@ -1,0 +1,7 @@
+{% if new %}
+<form  enctype="multipart/form-data" method="post" action="" >
+       {% csrf_token %}
+        {{taskform.as_p}}
+       <input type="submit" value="Submit" />
+    </form>
+{%endif%}

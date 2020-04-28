@@ -1,4 +1,5 @@
 from django import forms
+from .models import Task
 
 class ConnexionForm(forms.Form):
     username = forms.CharField(label="Nom d'utilisateur", max_length=30)
@@ -6,3 +7,9 @@ class ConnexionForm(forms.Form):
 
 class JournalForm(forms.Form):
     show = forms.BooleanField(help_text="Show history",required=False)
+
+class TaskForm(forms.ModelForm):
+    class Meta :
+        model = Task
+        fields = '__all__'
+

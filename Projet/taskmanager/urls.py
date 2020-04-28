@@ -8,6 +8,7 @@ urlpatterns = [
     path('connexion/<str:ident>/', views.Listeprojects, name='projets'),
     path('project/<int:ident>/', views.projet),
     path('task/<int:ide>/',views.tache,name='task'),
+    path('newtask/',views.newtask),
 
 ]
 
