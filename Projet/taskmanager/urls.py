@@ -3,8 +3,12 @@ from . import views
 
 urlpatterns = [
     path('connexion/', views.connexion),
-    path('deconnexion/',views.deconnexion),
-    path('projects/',views.Listeprojects),
-    path('connexion/<str:ident>/',views.Listeprojects, name='projets'),
-    path('project/<int:ident>/',views.projet),
+    path('deconnexion/', views.deconnexion),
+    path('projects/<str:ident>/', views.Listeprojects),
+    path('connexion/<str:ident>/', views.Listeprojects, name='projets'),
+    path('project/<int:ident>/', views.projet),
+    path('task/project/<int:ide>/',views.tache,name='task'),
 ]
+
+
+

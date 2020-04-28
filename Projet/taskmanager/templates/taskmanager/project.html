@@ -1,9 +1,9 @@
 <ul>
     {% for t in tasks %}
 
-    <li>
-        {{t.name}}
-    </li>
+
+    <a href="{% url 'task' ide=t.id %}"> {{t.name}} </a>
+
 
     {% endfor %}
 </ul>

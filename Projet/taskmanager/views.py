@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Project,Task,Status
+from .models import Project, Task, Status
 from .forms import ConnexionForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-
 
 
 def connexion(request):
@@ -19,7 +18,7 @@ def connexion(request):
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # nous connectons l'utilisateur
 
-                return redirect('projets', ident = user.id)
+                return redirect('projets', ident=user.id)
             else:  # sinon une erreur sera affichée
                 error = True
         else:
@@ -32,10 +31,17 @@ def deconnexion(request):
     logout(request)
     return redirect(reverse(connexion))
 
+
 def Listeprojects(request, ident):
-    projects = Project.objects.filter(id = ident)
-    return render(request,'taskmanager/projects.html',locals())
+    projects = Project.objects.filter(id=ident)
+    return render(request, 'taskmanager/projects.html', locals())
+
 
 def projet(request, ident):
-    tasks = Task.objects.filter(id = ident)
-    return render(request,'taskmanager/project.html',locals())
+    tasks = Task.objects.filter(id=ident)
+    return render(request, 'taskmanager/project.html', locals())
+
+
+def tache(request,ide):
+    task = Task.objects.get(id=ide)
+    return render(request, 'taskmanager/tache.html', locals())
