@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Project
+from .models import Project,Task,Status
 from .forms import ConnexionForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -32,6 +32,10 @@ def deconnexion(request):
     logout(request)
     return redirect(reverse(connexion))
 
-def project(request, ident):
+def Listeprojects(request, ident):
     projects = Project.objects.filter(id = ident)
     return render(request,'taskmanager/projects.html',locals())
+
+def projet(request, ident):
+    tasks = Task.objects.filter(id = ident)
+    return render(request,'taskmanager/project.html',locals())
