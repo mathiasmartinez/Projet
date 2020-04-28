@@ -22,7 +22,7 @@ class Task(models.Model):
     assignee = models.ForeignKey(User,on_delete=models.CASCADE)
     start_date = models.DateTimeField(default=timezone.now)
     due_date = models.DateTimeField(default=timezone.now)
-    priority = models.IntegerField()
+    priority = models.IntegerField() # Degré de priorité avec 1 une tâche prioritaire
     status = models.ForeignKey('Status', on_delete=models.CASCADE)
 
     def __str__(self):
