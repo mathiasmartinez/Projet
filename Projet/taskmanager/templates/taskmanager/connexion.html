@@ -5,7 +5,11 @@
 {% endif %}
 
 {% if user.is_authenticated %}
-You are already connected, {{ user.username }} !
+<div style="text-align : right ; font-size:100%">
+<a style = "color:red" href="{% url 'logout' %}"> Log out </a>
+    </div>
+<h2> You are already connected, {{ user.username }} ! </h2>
+<br>
 <br>
 <a style="font-size:200%" ; href="{% url 'projects' ident=user.id %}"> My projects </a>
 {% else %}

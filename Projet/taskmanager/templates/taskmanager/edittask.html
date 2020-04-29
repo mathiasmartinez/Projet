@@ -11,29 +11,29 @@
     <label for="Project"> Project : </label>
     <select id="Project" name="Project">
         {% for p in projects %}
-        <option value={{p.name}}> {{p.name}}</option>
+        <option value="{{p.id}}"> {{p.name}}</option>
         {%endfor%}
     </select>
     <br><br>
     <label for="name"> Name : </label>
-    <input type="text" id="name" name="name" value={{task.name}}> <br><br>
+    <input type="text" id="name" name="name" value="{{task.name}}"> <br><br>
     <label for="description"> Description : </label>
-    <input type="text" id="description" name="description" value={{task.description}}> <br><br>
+    <input type="text" id="description" name="description" value="{{task.description}}"> <br><br>
     <select id="assignee" name="assignee">
         {% for a in users %}
-        <option value={{a.username}}> {{a.username}}</option>
+        <option value="{{a.id}}"> {{a.username}}</option>
         {% endfor %}
-    </select>
+    </select> <br><br>
     <label for="start_date"> Start date </label>
-    <input type="date" id="start_date" name="start_date" value={{task.start_date}}> <br><br>
+    <input type="date" id="start_date" name="start_date" value="{{task.star_date}}"> <br><br>
     <label for="due_date"> Due date : </label>
-    <input type="date" id="due_date" name="due_date" value={{task.due_date}}> <br><br>
+    <input type="date" id="due_date" name="due_date" value="{{task.due_date}}"> <br><br>
      <label for="description"> Priority : </label>
-    <input type="text" id="priority" name="priority" value={{task.priority}}> <br><br>
+    <input type="text" id="priority" name="priority" value="{{task.priority}}"> <br><br>
     <label for="status"> Status : </label>
     <select id="status" name="status">
         {% for s in status %}
-        <option value={{s.name}}> {{s.name}}</option>
+        <option value="{{s.id}}"> {{s.name}}</option>
         {% endfor %}
     </select>
     <br><br>

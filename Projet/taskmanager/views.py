@@ -91,15 +91,19 @@ def edittask(request,ide):
     status = Status.objects.all()
     users = User.objects.all()
     if taskform.is_valid():
-
-        Task.objects.get(id=ide).project = taskform.cleaned_data['project']
+        project_id = taskform.cleaned_data['project']
+        Task.objects.get(id=ide).project = Project.objects.get(id=project_id)
         Task.objects.get(id=ide).name = taskform.cleaned_data['name']
         Task.objects.get(id=ide).description = taskform.cleaned_data['description']
-        Task.objects.get(id=ide).assignee = taskform.cleaned_data['assignee']
+        user_id = taskform.cleaned_data['assignee']
+        Task.objects.get(id=ide).assignee = User.objects.get(id=user_id)
         Task.objects.get(id=ide).start_date = taskform.cleaned_data['start_date']
         Task.objects.get(id=ide).priority = taskform.cleaned_data['priority']
-        Task.objects.get(id=ide).status = taskform.cleaned_data['status']
+        status_id = taskform.cleaned_data['status']
+        Task.objects.get(id=ide).status = Status.objects.get(id=status_id)
         Task.objects.get(id=ide).due_date = taskform.cleaned_data['due_date']
         Task.objects.get(id=ide).save()
         return redirect('task',ide = task.id)
+    else :
+        print("erreurs : {}".format(taskform.errors.as_json()))
     return render(request, 'taskmanager/edittask.html', {'task' : task , 'projects' : projects , 'users':users,'status':status})

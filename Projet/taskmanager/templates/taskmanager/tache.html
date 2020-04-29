@@ -21,8 +21,8 @@ td {
     </style>
 </head>
 <body>
-<div style="text-align : right ; font-size:200% ; color:red">
-<a href="{% url 'logout' %}"> Log out </a>
+<div style="text-align : right ; font-size:200%">
+<a style="color:red" href="{% url 'logout' %}"> Log out </a>
     </div>
 <div style="background-color : lightgrey">
 <a style="text-align:center ; font-size:400% ; color:blue" href="{%url 'detail_project' ident=p.id%}"> {{p.name}}</a>
