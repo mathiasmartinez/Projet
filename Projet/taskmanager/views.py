@@ -18,7 +18,7 @@ def connexion(request):
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # on connecte l'utilisateur
 
-                return redirect('projets', ident=user.id)
+                return redirect('projects', ident=user.id)
             else:  # Sinon un message d'erreur sera affiché
                 error = True
         else:
@@ -34,7 +34,8 @@ def deconnexion(request):
 
 def Listeprojects(request, ident):
     '''Vue qui affiche la liste des projets d'un utilisateur'''
-    projects = Project.objects.filter(id=ident) #On récupère les projets de l'utilisateur connecté
+    projects = Project.objects.filter(members=ident) #On récupère les projets de l'utilisateur connecté
+    user = User.objects.get(id=ident)
     return render(request, 'taskmanager/projects.html', locals())
 
 

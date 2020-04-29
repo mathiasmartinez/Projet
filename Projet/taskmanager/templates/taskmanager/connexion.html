@@ -1,16 +1,18 @@
-<h1>Se connecter</h1>
+<h1>Log in</h1>
 
 {% if error %}
-<p><strong> Utilisateur inconnu ou mauvais de mot de passe. </strong></p>
+<p><strong> Unknown user or wrong password. </strong></p>
 {% endif %}
 
 {% if user.is_authenticated %}
-Vous êtes connecté, {{ user.username }} !
+You are already connected, {{ user.username }} !
+<br>
+<a style="font-size:200%" ; href="{% url 'projects' ident=user.id %}"> My projects </a>
 {% else %}
 
 <form method="post" action=".">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Se connecter" />
+    <input type="submit" value="Login" />
 </form>
 {% endif %}

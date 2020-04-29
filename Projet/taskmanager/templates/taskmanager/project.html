@@ -8,6 +8,11 @@
     </style>
 </head>
 </html>
+
+<div style="text-align : right ; font-size:200% ; color:red">
+<a href="{% url 'logout' %}"> Log out </a>
+    </div>
+
 <div style = "background-color:lightgrey">
 <h1 style="font-size:500%"> <strong> {{projet.name}} </strong></h1>
 </div>
@@ -18,4 +23,4 @@
     {% endfor %}
 </ul>
 
-<a style="font-size:200%"; href="{% url 'newtask' %}"> + : Créer une nouvelle tâche </a>
+<a style="font-size:200%"; href="{% url 'newtask' %}"> + : Create a new task </a>

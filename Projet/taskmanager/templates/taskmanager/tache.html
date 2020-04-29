@@ -21,6 +21,9 @@ td {
     </style>
 </head>
 <body>
+<div style="text-align : right ; font-size:200% ; color:red">
+<a href="{% url 'logout' %}"> Log out </a>
+    </div>
 <div style="background-color : lightgrey">
 <a style="text-align:center ; font-size:400% ; color:blue" href="{%url 'detail_project' ident=p.id%}"> {{p.name}}</a>
 </div>
@@ -93,7 +96,7 @@ td {
 
 </table>
 <br><br>
-<a style = "font-size:200%" href="{% url 'edittask' ide=task.id %}"> Modifier la tâche </a> <br><br>
+<a style = "font-size:200%" href="{% url 'edittask' ide=task.id %}"> Modify the task </a> <br><br>
 
 <form  enctype="multipart/form-data" method="post" action= "." >
        {% csrf_token %}

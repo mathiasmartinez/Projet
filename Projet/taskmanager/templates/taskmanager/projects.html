@@ -1,9 +1,10 @@
-<h2> La liste de vos projets : </h2>
+<div style="text-align : right ; font-size:200% ; color:red">
+<a href="{% url 'logout' %}"> Log out </a>
+    </div>
+<h2 style="font-size:200%"> {{user.username}}, here is the list of your projects :  </h2>
 <ul>
-
-    <tr>
         {% for p in projects %}
-        <td> <a href="{% url 'detail_project' ident=p.id %}"> {{p.name}}</a> </td>
+        <li> <a href="{% url 'detail_project' ident=p.id %}"> {{p.name}}</a> </li>
         {% endfor %}
-    </tr>
+
 </ul>
