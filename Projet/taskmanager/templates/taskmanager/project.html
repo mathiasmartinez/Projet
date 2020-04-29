@@ -1,12 +1,21 @@
-<h1> <strong>{{projet.name}} </strong></h1>
+<html>
+<head>
+    <style>
+    a:visited {color:mediumvioletred}
+    a:link { color:black;
+
+    }
+    </style>
+</head>
+</html>
+<div style = "background-color:lightgrey">
+<h1 style="font-size:500%"> <strong> {{projet.name}} </strong></h1>
+</div>
+
 <ul>
     {% for t in tasks %}
-
-
     <li> <a style="font-size:200%"; href="{% url 'task' ide=t.id %}"> {{t.name}} </a> </li>
-
-
     {% endfor %}
 </ul>
 
-<a href="{% url 'newtask' %}"> Créer une nouvelle tâche </a>
+<a style="font-size:200%"; href="{% url 'newtask' %}"> + : Créer une nouvelle tâche </a>

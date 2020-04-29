@@ -50,7 +50,8 @@ def tache(request,ide):
     show = False # Par défaut, on n'affichera pas l'historique du journal
     #Récupération des données qui concernent la tâche concernée par l'identifiant ide
     task = Task.objects.get(id=ide)
-    journal = Journal.objects.filter(id=ide)
+    journal = Journal.objects.filter(task_id=ide)
+    p = Project.objects.get(id=task.project_id)
     form = JournalForm(request.POST or None) # Création du formulaire vide ou avec les données déjà entrées
     # si l'utilisateur n'y accède pas pour la 1ère fois
 
@@ -100,10 +101,4 @@ def edittask(request,ide):
         Task.objects.get(id=ide).due_date = taskform.cleaned_data['due_date']
         Task.objects.get(id=ide).save()
         return redirect('task',ide = task.id)
-    return render(request, 'taskmanager/edittask.html', locals())
-
-
-
-
-
-
+    return render(request, 'taskmanager/edittask.html', {'task' : task , 'projects' : projects , 'users':users,'status':status})

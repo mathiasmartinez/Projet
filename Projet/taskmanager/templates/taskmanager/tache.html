@@ -10,6 +10,7 @@ table {
     font-size:200%;
 }
 td {
+    padding :15px ;
     border : 1px solid black ;
     border-collapse:collapse;
 }
@@ -19,8 +20,11 @@ td {
         }
     </style>
 </head>
-
-<h2> {{projet.name}} </h2>
+<body>
+<div style="background-color : lightgrey">
+<a style="text-align:center ; font-size:400% ; color:blue" href="{%url 'detail_project' ident=p.id%}"> {{p.name}}</a>
+</div>
+<br>
 <table>
     <tr>
         <td>
@@ -35,7 +39,7 @@ td {
             <i>Projet</i>
         </td>
         <td>
-            {{task.project}}
+            <a style="color:black" href="{%url 'detail_project' ident=p.id%}" > {{task.project}} </a>
         </td>
     </tr>
     <tr>
@@ -88,22 +92,26 @@ td {
     </tr>
 
 </table>
+<br><br>
+<a style = "font-size:200%" href="{% url 'edittask' ide=task.id %}"> Modifier la tâche </a> <br><br>
 
 <form  enctype="multipart/form-data" method="post" action= "." >
        {% csrf_token %}
         {{form.as_p}}
        <input type="submit" value="Submit" />
     </form>
-
+<div style="background-color : lightblue">
 {% if show %}
+<h2> Journal : </h2>
 {% for j in journal %}
-    <p>
-        {{j.author}} :
-        {{j.entry}} at {{j.date}}.
+    <p style="font-size : 150%">
+        <i><u>{{j.author}} </u></i> :
+        <span style="color:purple"> <b>{{j.entry}} </b> </span> <i>at {{j.date}}.</i>
     </p>
 {% endfor %}
 {%endif %}
+</div>
 
-<a href="{% url 'edittask' ide=task.id %}"> Modifier la tâche </a>
+</body>
 </html>
 
