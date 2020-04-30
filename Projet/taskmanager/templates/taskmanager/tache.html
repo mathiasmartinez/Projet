@@ -9,25 +9,28 @@ table {
     text-align:center;
     font-size:200%;
 }
-td {
-    padding :15px ;
+td {padding :15px ;
     border : 1px solid black ;
-    border-collapse:collapse;
-}
-        tr {
-            border : 1px solid black ;
-            border-collapse : collapse ;
-        }
+    border-collapse:collapse;}
+
+tr {border : 1px solid black ;
+    border-collapse : collapse ;}
     </style>
 </head>
+
 <body>
+
+<!-- Bouton de déconnexion -->
 <div style="text-align : right ; font-size:200%">
 <a style="color:red" href="{% url 'logout' %}"> Log out </a>
-    </div>
+</div>
+
+<!-- Lien vers la page du projet -->
 <div style="background-color : lightgrey">
 <a style="text-align:center ; font-size:400% ; color:blue" href="{%url 'detail_project' ident=p.id%}"> {{p.name}}</a>
 </div>
 <br>
+
 <table>
     <tr>
         <td>
@@ -96,13 +99,18 @@ td {
 
 </table>
 <br><br>
+
 <a style = "font-size:200%" href="{% url 'edittask' ide=task.id %}"> Modify the task </a> <br><br>
 
+
+<!-- Bouton d'affichage du journal -->
 <form  enctype="multipart/form-data" method="post" action= "." >
        {% csrf_token %}
         {{form.as_p}}
        <input type="submit" value="Submit" />
-    </form>
+</form>
+
+<!-- Affichage du journal -->
 <div style="background-color : lightblue">
 {% if show %}
 <h2> Journal : </h2>

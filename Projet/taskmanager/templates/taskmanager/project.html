@@ -2,16 +2,15 @@
 <head>
     <style>
     a:visited {color:mediumvioletred}
-    a:link { color:black;
+    a:link { color:black;}
 
-    }
-        table { font-size:150%;
-            padding : 50px}
-        td { padding: 20px;}
+    table { font-size:150%;
+            padding : 50px;}
+    td { padding: 20px;}
     </style>
 </head>
-</html>
 
+<!-- Bouton de déconnexion -->
 <div style="text-align : right ; font-size:200%">
 <a style="color:red" href="{% url 'logout' %}"> Log out </a>
     </div>
@@ -27,6 +26,7 @@
         <td> Start date </td>
         <td> Due date </td>
     </tr>
+
     {% for t in tasks %}
     <tr> <td><a href="{% url 'task' ide=t.id %}"> <strong>{{t.name}} </strong> </a> </td>
     <td> {{t.assignee}}</td>
@@ -37,3 +37,5 @@
 </table>
 
 <a style="font-size:200%"; href="{% url 'newtask' %}"> + : Create a new task </a>
+
+</html>

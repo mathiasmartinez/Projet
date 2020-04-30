@@ -8,6 +8,7 @@ from django.contrib.auth import logout
 
 
 def connexion(request):
+    '''Page de connexion d'un utilisateur '''
     error = False
     if request.method == "POST":
         form = ConnexionForm(request.POST)
@@ -27,16 +28,20 @@ def connexion(request):
     return render(request, 'taskmanager/connexion.html', locals())
 
 
+
 def deconnexion(request):
+    '''Page de déconnexion d'un utilisateur'''
     logout(request)
     return redirect(reverse(connexion))
+
 
 
 def Listeprojects(request, ident):
     '''Vue qui affiche la liste des projets d'un utilisateur'''
     projects = Project.objects.filter(members=ident) #On récupère les projets de l'utilisateur connecté
-    user = User.objects.get(id=ident)
+    user = User.objects.get(id=ident) # On récupère l'utilisateur connecté pour afficher son nom
     return render(request, 'taskmanager/projects.html', locals())
+
 
 
 def projet(request, ident):
@@ -44,6 +49,7 @@ def projet(request, ident):
     projet = Project.objects.get(id=ident)
     tasks = Task.objects.filter(project_id=ident) #On récupère les tâches de l'utilisateur concerné
     return render(request, 'taskmanager/project.html', locals())
+
 
 
 def tache(request,ide):
@@ -61,6 +67,8 @@ def tache(request,ide):
         show = form.cleaned_data['show']
 
     return render(request, 'taskmanager/tache.html', locals())
+
+
 
 def newtask(request):
     '''Vue qui affiche un formulaire de création d'une nuvelle tâche'''
@@ -82,6 +90,8 @@ def newtask(request):
         return redirect('task',ide = task.id) # Redirection de l'utilisateur vers la page de la tâche concernée
         # en utilisant son identifiant
     return render(request,'taskmanager/newtask.html',locals())
+
+
 
 def edittask(request,ide):
 
