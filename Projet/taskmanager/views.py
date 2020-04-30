@@ -99,10 +99,14 @@ def edittask(request,ide):
     # pour permetre à l'utilisateur de modifier une tâche
 
     # Récupération des données nécessaires à l'affichage du formulaire
-    projects = Project.objects.all()
+
     task =  Task.objects.get(id=ide)
-    status = Status.objects.all()
-    users = User.objects.all()
+    projects = Project.objects.exclude(id=task.project.id)
+    status = Status.objects.exclude(name=task.status.name)
+    users = User.objects.exclude(username=task.assignee.username)
+    current_project = Project.objects.get(id=task.project.id)
+    current_status = Status.objects.get(name=task.status.name)
+    current_user = User.objects.get(username=task.assignee.username)
     if edittaskform.is_valid():
         # On utilise la variable task pour modifier les entrées des attributs
         # de la tâche à modifier
@@ -119,6 +123,5 @@ def edittask(request,ide):
         task.due_date = edittaskform.cleaned_data['due_date']
         task.save() # On enregistre la tâche dans la base de données pour la modifier.
         return redirect('task',ide = task.id) # On renvoie l'utilisateur vers la page d'affichage de la tâche modifiée.
-    else :
-        print("erreurs : {}".format(edittaskform.errors.as_json()))
-    return render(request, 'taskmanager/edittask.html', {'task' : task , 'projects' : projects , 'users':users,'status':status})
+
+    return render(request, 'taskmanager/edittask.html', locals())
