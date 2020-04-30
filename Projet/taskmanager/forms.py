@@ -16,3 +16,11 @@ class TaskForm(forms.ModelForm):
         fields = '__all__' # On utilise tous les champs de la classe Task pour
         #  créer un nouvel objet de cette classe
 
+class EditTaskForm(forms.Form):
+    name = forms.CharField(required=False)
+    project = forms.IntegerField(required=False)
+    assignee = forms.CharField(required=False)
+    start_date = forms.DateTimeField(required=False)
+    due_date = forms.DateTimeField(required=False)
+    priority = forms.IntegerField(required=False)
+    status = forms.CharField(required=False)

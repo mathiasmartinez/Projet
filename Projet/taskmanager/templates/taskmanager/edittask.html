@@ -21,7 +21,7 @@
     <input type="text" id="description" name="description" value="{{task.description}}"> <br><br>
     <select id="assignee" name="assignee">
         {% for a in users %}
-        <option value="{{a.id}}"> {{a.username}}</option>
+        <option value="{{a.username}}"> {{a.username}}</option>
         {% endfor %}
     </select> <br><br>
     <label for="start_date"> Start date </label>
@@ -33,7 +33,7 @@
     <label for="status"> Status : </label>
     <select id="status" name="status">
         {% for s in status %}
-        <option value="{{s.id}}"> {{s.name}}</option>
+        <option value="{{s.name}}"> {{s.name}}</option>
         {% endfor %}
     </select>
     <br><br>

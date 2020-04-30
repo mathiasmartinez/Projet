@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Project, Task, Journal,Status
 from django.contrib.auth.models import User
-from .forms import ConnexionForm,JournalForm,TaskForm
+from .forms import ConnexionForm,JournalForm,TaskForm,EditTaskForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 
@@ -85,22 +85,24 @@ def newtask(request):
 
 def edittask(request,ide):
 
-    taskform = TaskForm(request.POST or None)
+    taskform = EditTaskForm(request.POST or None)
     projects = Project.objects.all()
     task =  Task.objects.get(id=ide)
     status = Status.objects.all()
     users = User.objects.all()
     if taskform.is_valid():
         project_id = taskform.cleaned_data['project']
+        print("project id = ")
+        print(project_id)
         Task.objects.get(id=ide).project = Project.objects.get(id=project_id)
         Task.objects.get(id=ide).name = taskform.cleaned_data['name']
         Task.objects.get(id=ide).description = taskform.cleaned_data['description']
-        user_id = taskform.cleaned_data['assignee']
-        Task.objects.get(id=ide).assignee = User.objects.get(id=user_id)
+        user_name = taskform.cleaned_data['assignee']
+        Task.objects.get(id=ide).assignee = User.objects.get(name=user_name)
         Task.objects.get(id=ide).start_date = taskform.cleaned_data['start_date']
         Task.objects.get(id=ide).priority = taskform.cleaned_data['priority']
-        status_id = taskform.cleaned_data['status']
-        Task.objects.get(id=ide).status = Status.objects.get(id=status_id)
+        status_name = taskform.cleaned_data['status']
+        Task.objects.get(id=ide).status = Status.objects.get(name=status_name)
         Task.objects.get(id=ide).due_date = taskform.cleaned_data['due_date']
         Task.objects.get(id=ide).save()
         return redirect('task',ide = task.id)
