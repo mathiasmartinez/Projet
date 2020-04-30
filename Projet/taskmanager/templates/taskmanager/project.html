@@ -5,6 +5,9 @@
     a:link { color:black;
 
     }
+        table { font-size:150%;
+            padding : 50px}
+        td { padding: 20px;}
     </style>
 </head>
 </html>
@@ -17,10 +20,20 @@
 <h1 style="font-size:500%"> <strong> {{projet.name}} </strong></h1>
 </div>
 
-<ul>
+<table>
+    <tr>
+        <td> Task </td>
+        <td>  Assignee </td>
+        <td> Start date </td>
+        <td> Due date </td>
+    </tr>
     {% for t in tasks %}
-    <li> <a style="font-size:200%"; href="{% url 'task' ide=t.id %}"> {{t.name}} </a> </li>
+    <tr> <td><a href="{% url 'task' ide=t.id %}"> <strong>{{t.name}} </strong> </a> </td>
+    <td> {{t.assignee}}</td>
+    <td> {{t.start_date}}</td>
+    <td> {{t.due_date}}</td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
 
 <a style="font-size:200%"; href="{% url 'newtask' %}"> + : Create a new task </a>

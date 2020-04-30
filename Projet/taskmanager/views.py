@@ -85,27 +85,28 @@ def newtask(request):
 
 def edittask(request,ide):
 
-    taskform = EditTaskForm(request.POST or None)
+    edittaskform = EditTaskForm(request.POST or None)
     projects = Project.objects.all()
     task =  Task.objects.get(id=ide)
     status = Status.objects.all()
     users = User.objects.all()
-    if taskform.is_valid():
-        project_id = taskform.cleaned_data['project']
-        print("project id = ")
-        print(project_id)
-        Task.objects.get(id=ide).project = Project.objects.get(id=project_id)
-        Task.objects.get(id=ide).name = taskform.cleaned_data['name']
-        Task.objects.get(id=ide).description = taskform.cleaned_data['description']
-        user_name = taskform.cleaned_data['assignee']
-        Task.objects.get(id=ide).assignee = User.objects.get(name=user_name)
-        Task.objects.get(id=ide).start_date = taskform.cleaned_data['start_date']
-        Task.objects.get(id=ide).priority = taskform.cleaned_data['priority']
-        status_name = taskform.cleaned_data['status']
+    if edittaskform.is_valid():
+        project_name = edittaskform.cleaned_data['project']
+        print("project name = ")
+        print(project_name)
+        Task.objects.get(id=ide).project = Project.objects.get(name=project_name)
+        Task.objects.get(id=ide).name = edittaskform.cleaned_data['name']
+        Task.objects.get(id=ide).description = edittaskform.cleaned_data['description']
+        assignee = edittaskform.cleaned_data['assignee']
+        Task.objects.get(id=ide).assignee.clear()
+        Task.objects.get(id=ide).assignee = User.objects.get(username=assignee)
+        Task.objects.get(id=ide).start_date = edittaskform.cleaned_data['start_date']
+        Task.objects.get(id=ide).priority = edittaskform.cleaned_data['priority']
+        status_name = edittaskform.cleaned_data['status']
         Task.objects.get(id=ide).status = Status.objects.get(name=status_name)
-        Task.objects.get(id=ide).due_date = taskform.cleaned_data['due_date']
+        Task.objects.get(id=ide).due_date = edittaskform.cleaned_data['due_date']
         Task.objects.get(id=ide).save()
         return redirect('task',ide = task.id)
     else :
-        print("erreurs : {}".format(taskform.errors.as_json()))
+        print("erreurs : {}".format(edittaskform.errors.as_json()))
     return render(request, 'taskmanager/edittask.html', {'task' : task , 'projects' : projects , 'users':users,'status':status})

@@ -18,7 +18,8 @@ class TaskForm(forms.ModelForm):
 
 class EditTaskForm(forms.Form):
     name = forms.CharField(required=False)
-    project = forms.IntegerField(required=False)
+    project = forms.CharField(required=False)
+    description = forms.CharField(required=False)
     assignee = forms.CharField(required=False)
     start_date = forms.DateTimeField(required=False)
     due_date = forms.DateTimeField(required=False)
