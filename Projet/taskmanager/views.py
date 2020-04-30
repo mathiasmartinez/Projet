@@ -95,28 +95,30 @@ def newtask(request):
 
 def edittask(request,ide):
 
-    edittaskform = EditTaskForm(request.POST or None)
+    edittaskform = EditTaskForm(request.POST or None) # Création d'un formulaire
+    # pour permetre à l'utilisateur de modifier une tâche
+
+    # Récupération des données nécessaires à l'affichage du formulaire
     projects = Project.objects.all()
     task =  Task.objects.get(id=ide)
     status = Status.objects.all()
     users = User.objects.all()
     if edittaskform.is_valid():
-        project_name = edittaskform.cleaned_data['project']
-        print("project name = ")
-        print(project_name)
-        Task.objects.get(id=ide).project = Project.objects.get(name=project_name)
-        Task.objects.get(id=ide).name = edittaskform.cleaned_data['name']
-        Task.objects.get(id=ide).description = edittaskform.cleaned_data['description']
+        # On utilise la variable task pour modifier les entrées des attributs
+        # de la tâche à modifier
+        project_name = edittaskform.cleaned_data['project'] # Récupération du projet auquel est assigné la tâche dans le formulaire
+        task.project = Project.objects.get(name=project_name)
+        task.name = edittaskform.cleaned_data['name']
+        task.description = edittaskform.cleaned_data['description']
         assignee = edittaskform.cleaned_data['assignee']
-        Task.objects.get(id=ide).assignee.clear()
-        Task.objects.get(id=ide).assignee = User.objects.get(username=assignee)
-        Task.objects.get(id=ide).start_date = edittaskform.cleaned_data['start_date']
-        Task.objects.get(id=ide).priority = edittaskform.cleaned_data['priority']
+        task.assignee = User.objects.get(username=assignee)
+        task.start_date = edittaskform.cleaned_data['start_date']
+        task.priority = edittaskform.cleaned_data['priority']
         status_name = edittaskform.cleaned_data['status']
-        Task.objects.get(id=ide).status = Status.objects.get(name=status_name)
-        Task.objects.get(id=ide).due_date = edittaskform.cleaned_data['due_date']
-        Task.objects.get(id=ide).save()
-        return redirect('task',ide = task.id)
+        task.status = Status.objects.get(name=status_name)
+        task.due_date = edittaskform.cleaned_data['due_date']
+        task.save() # On enregistre la tâche dans la base de données pour la modifier.
+        return redirect('task',ide = task.id) # On renvoie l'utilisateur vers la page d'affichage de la tâche modifiée.
     else :
         print("erreurs : {}".format(edittaskform.errors.as_json()))
     return render(request, 'taskmanager/edittask.html', {'task' : task , 'projects' : projects , 'users':users,'status':status})
