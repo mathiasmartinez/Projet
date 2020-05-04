@@ -3,11 +3,11 @@
 <a style="color:red" href="{% url 'logout' %}"> Log out </a>
 </div>
 
-<h2 style="font-size:200%"> {{user.username}}, here is the list of your projects :  </h2>
+<h2 style="font-size:200%"> {{user_connected.username}}, here is the list of your projects :  </h2>
 
 <!-- Liste des projets de l'utilisateur -->
 <ul>
     {% for p in projects %}
-    <li> <a style="font-size:200%" ; href="{% url 'detail_project' user=user.id ident=p.id %}"> {{p.name}} </a> </li>
+    <li> <a style="font-size:200%" ; href="{% url 'detail_project' user=user_connected.id ident=p.id %}"> {{p.name}} </a> </li>
     {% endfor %}
 </ul>

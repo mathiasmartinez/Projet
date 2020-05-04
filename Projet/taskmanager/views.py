@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .forms import ConnexionForm,JournalForm,TaskForm,EditTaskForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 
 def connexion(request):
@@ -19,7 +20,7 @@ def connexion(request):
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # on connecte l'utilisateur
 
-                return redirect('projects', ident=user.id)
+                return redirect('projects', user=user.id)
             else:  # Sinon un message d'erreur sera affiché
                 error = True
         else:
@@ -35,19 +36,29 @@ def deconnexion(request):
     return redirect(reverse(connexion))
 
 
-
+@login_required
 def Listeprojects(request, user):
     '''Vue qui affiche la liste des projets d'un utilisateur'''
     projects = Project.objects.filter(members=user) #On récupère les projets de l'utilisateur connecté
-    user = User.objects.get(id=user) # On récupère l'utilisateur connecté pour afficher son nom
-    return render(request, 'taskmanager/projects.html', locals())
+    user_connected = User.objects.get(id=user) # On récupère l'utilisateur connecté pour afficher son nom
+    if request.user == user_connected :
+        return render(request, 'taskmanager/projects.html', locals())
+    else:
+        return render(request, 'taskmanager/ErreurAcces.html', {'user':user_connected})
 
-
+def is_present(user,project):
+    p = Project.objects.get(id=project)
+    u = User.objects.get(id=user)
+    mem = p.members.all()
+    for m in mem :
+        if m.id==u.id :
+            return True
+    return False
 
 def projet(request, user, ident):
     ''' Vue qui affiche les tâches d'un projet'''
     projet = Project.objects.get(id=ident)
-    if(Project.objects.filter(members=user).filter(id=ident)):
+    if(is_present(user,ident)) :
 
         tasks = Task.objects.filter(project_id=ident) #On récupère les tâches de l'utilisateur concerné
         return render(request, 'taskmanager/project.html', locals())
@@ -63,14 +74,19 @@ def tache(request,ide):
     task = Task.objects.get(id=ide)
     journal = Journal.objects.filter(task_id=ide)
     p = Project.objects.get(id=task.project_id)
-    form = JournalForm(request.POST or None) # Création du formulaire vide ou avec les données déjà entrées
-    # si l'utilisateur n'y accède pas pour la 1ère fois
+    user = request.user
+    if is_present(request.user.id,task.project.id):
 
-    if form.is_valid():
-        # On récupère le booléen stipulant si on doit afficher l'historique du journal
-        show = form.cleaned_data['show']
+        form = JournalForm(request.POST or None) # Création du formulaire vide ou avec les données déjà entrées
+         # si l'utilisateur n'y accède pas pour la 1ère fois
 
-    return render(request, 'taskmanager/tache.html', locals())
+        if form.is_valid():
+            # On récupère le booléen stipulant si on doit afficher l'historique du journal
+            show = form.cleaned_data['show']
+
+        return render(request, 'taskmanager/tache.html', locals())
+    else :
+        return render(request,'taskmanager/ErreurAcces.html',locals())
 
 
 

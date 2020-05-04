@@ -27,7 +27,7 @@ tr {border : 1px solid black ;
 
 <!-- Lien vers la page du projet -->
 <div style="background-color : lightgrey">
-<a style="text-align:center ; font-size:400% ; color:blue" href="{%url 'detail_project' ident=p.id%}"> {{p.name}}</a>
+<a style="text-align:center ; font-size:400% ; color:blue" href="{%url 'detail_project' user=user.id ident=p.id%}"> {{p.name}}</a>
 </div>
 <br>
 
@@ -45,7 +45,7 @@ tr {border : 1px solid black ;
             <i>Projet</i>
         </td>
         <td>
-            <a style="color:black" href="{%url 'detail_project' ident=p.id%}" > {{task.project}} </a>
+            <a style="color:black" href="{%url 'detail_project' user=user.id ident=p.id%}" > {{task.project}} </a>
         </td>
     </tr>
     <tr>
