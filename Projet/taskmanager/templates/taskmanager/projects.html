@@ -8,6 +8,6 @@
 <!-- Liste des projets de l'utilisateur -->
 <ul>
     {% for p in projects %}
-    <li> <a style="font-size:200%" ; href="{% url 'detail_project' ident=p.id %}"> {{p.name}} </a> </li>
+    <li> <a style="font-size:200%" ; href="{% url 'detail_project' user=user.id ident=p.id %}"> {{p.name}} </a> </li>
     {% endfor %}
 </ul>

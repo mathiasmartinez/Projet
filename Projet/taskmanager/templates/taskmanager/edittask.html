@@ -1,17 +1,20 @@
 <form  enctype="multipart/form-data" method="post" action="" >
     {% csrf_token %}
+
     <label for="project"> Project : </label>
-    <select id="Project" name="project">
+    <select id="Project" name="project"> <!-- On affiche le projet précedemment sélectionné par défaut -->
         <option value="{{current_project.name}}"> {{current_project.name}}</option>
         {% for p in projects %}
         <option value="{{p.name}}"> {{p.name}}</option>
         {%endfor%}
     </select>
     <br><br>
+
     <label for="name"> Name : </label>
     <input type="text" id="name" name="name" value="{{task.name}}"> <br><br>
     <label for="description"> Description : </label>
     <input type="text" id="description" name="description" value="{{task.description}}"> <br><br>
+
     <label for="assignee"> Assignee : </label>
     <select id="assignee" name="assignee">
         <option value="{{current_user.username}}"> {{current_user.username}}</option>

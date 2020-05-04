@@ -36,19 +36,23 @@ def deconnexion(request):
 
 
 
-def Listeprojects(request, ident):
+def Listeprojects(request, user):
     '''Vue qui affiche la liste des projets d'un utilisateur'''
-    projects = Project.objects.filter(members=ident) #On récupère les projets de l'utilisateur connecté
-    user = User.objects.get(id=ident) # On récupère l'utilisateur connecté pour afficher son nom
+    projects = Project.objects.filter(members=user) #On récupère les projets de l'utilisateur connecté
+    user = User.objects.get(id=user) # On récupère l'utilisateur connecté pour afficher son nom
     return render(request, 'taskmanager/projects.html', locals())
 
 
 
-def projet(request, ident):
+def projet(request, user, ident):
     ''' Vue qui affiche les tâches d'un projet'''
     projet = Project.objects.get(id=ident)
-    tasks = Task.objects.filter(project_id=ident) #On récupère les tâches de l'utilisateur concerné
-    return render(request, 'taskmanager/project.html', locals())
+    if(Project.objects.filter(members=user).filter(id=ident)):
+
+        tasks = Task.objects.filter(project_id=ident) #On récupère les tâches de l'utilisateur concerné
+        return render(request, 'taskmanager/project.html', locals())
+    else :
+        return render(request, 'taskmanager/ErreurAcces.html', locals())
 
 
 
@@ -99,14 +103,20 @@ def edittask(request,ide):
     # pour permetre à l'utilisateur de modifier une tâche
 
     # Récupération des données nécessaires à l'affichage du formulaire
-
     task =  Task.objects.get(id=ide)
-    projects = Project.objects.exclude(id=task.project.id)
-    status = Status.objects.exclude(name=task.status.name)
-    users = User.objects.exclude(username=task.assignee.username)
+
+    # Récupération des entrées actuelles des attributs de la tâche
+    # afin de les afficher par défaut dans le formulaire
     current_project = Project.objects.get(id=task.project.id)
     current_status = Status.objects.get(name=task.status.name)
     current_user = User.objects.get(username=task.assignee.username)
+
+    # Récupération des entrées de la base de données que l'utilisateur peut choisir
+    # pour modifier la tâche.
+    projects = Project.objects.exclude(id=task.project.id)
+    status = Status.objects.exclude(name=task.status.name)
+    users = User.objects.exclude(username=task.assignee.username)
+
     if edittaskform.is_valid():
         # On utilise la variable task pour modifier les entrées des attributs
         # de la tâche à modifier

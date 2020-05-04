@@ -17,6 +17,7 @@ class TaskForm(forms.ModelForm):
         #  créer un nouvel objet de cette classe
 
 class EditTaskForm(forms.Form):
+    ''' Form de modification d'une tâche '''
     name = forms.CharField(required=False)
     project = forms.CharField(required=False)
     description = forms.CharField(required=False)
