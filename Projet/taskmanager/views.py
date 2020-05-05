@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 from .forms import ConnexionForm,JournalForm,TaskForm,EditTaskForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
-
 
 def connexion(request):
     '''Page de connexion d'un utilisateur '''
@@ -36,7 +34,7 @@ def deconnexion(request):
     return redirect(reverse(connexion))
 
 
-@login_required
+
 def Listeprojects(request, user):
     '''Vue qui affiche la liste des projets d'un utilisateur'''
     projects = Project.objects.filter(members=user) #On récupère les projets de l'utilisateur connecté
@@ -47,22 +45,23 @@ def Listeprojects(request, user):
         return render(request, 'taskmanager/ErreurAcces.html', {'user':user_connected})
 
 def is_present(user,project):
+    '''Fonction qui permet de savoir si un projet contient un utilisateur'''
     p = Project.objects.get(id=project)
     u = User.objects.get(id=user)
-    mem = p.members.all()
+    mem = p.members.all() # On récupère les membres du projet
     for m in mem :
-        if m.id==u.id :
+        if m.id==u.id : # Alors l'utilisateur fait bien partie du projet
             return True
     return False
 
 def projet(request, user, ident):
     ''' Vue qui affiche les tâches d'un projet'''
     projet = Project.objects.get(id=ident)
-    if(is_present(user,ident)) :
+    if(is_present(user,ident)) : # On vérifie que l'utilisateur connecté fait bien partie du projet
 
         tasks = Task.objects.filter(project_id=ident) #On récupère les tâches de l'utilisateur concerné
         return render(request, 'taskmanager/project.html', locals())
-    else :
+    else : # L'utilisateur ne fait pas partie du projet et n'y a donc pas accès.
         return render(request, 'taskmanager/ErreurAcces.html', locals())
 
 
@@ -74,9 +73,9 @@ def tache(request,ide):
     task = Task.objects.get(id=ide)
     journal = Journal.objects.filter(task_id=ide)
     p = Project.objects.get(id=task.project_id)
-    user = request.user
-    if is_present(request.user.id,task.project.id):
-
+    user = request.user # On récupère la donnée de l'utilisateur connecté.
+    if is_present(request.user.id,task.project.id): # Et on vérifie qu'il fait bien partie du projet
+        # Sinon il pourrait accéder à une task par son url (task/id/)
         form = JournalForm(request.POST or None) # Création du formulaire vide ou avec les données déjà entrées
          # si l'utilisateur n'y accède pas pour la 1ère fois
 
